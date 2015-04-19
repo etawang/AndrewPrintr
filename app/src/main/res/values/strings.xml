@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AndrewPrintr</string>
+    <string name="action_settings">Settings</string>
+    <string name="enterid_hint">Enter Your AndrewID</string>
+    <string name="enterid_button">Go</string>
+    <string name="title_activity_display_id">DisplayIdActivity</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

@@ -14,7 +14,7 @@
         android:id="@+id/enterid_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:hint="@string/enterid_hint" />
 
     <Button

@@ -21,7 +21,6 @@ public class EnterIdActivity extends ActionBarActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        // String andrewId = prefs.getString("andrewId", "");
         setContentView(R.layout.activity_enter_id);
 
         idButton = (Button) findViewById(R.id.enterid_button);
@@ -69,13 +68,28 @@ public class EnterIdActivity extends ActionBarActivity implements View.OnClickLi
     public void onClick(View v) {
         // Save andrewID in local storage
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("andrewId", idEditText.getText().toString());
+        String prevAndrewId = prefs.getString("andrewId", "");
 
+        SharedPreferences.Editor editor = prefs.edit();
+        String andrewId = idEditText.getText().toString();
+        editor.putString("andrewId", andrewId);
         editor.commit();
-        System.out.println(prefs.getString("andrewId", "NO STRING!"));
 
         Intent intent = new Intent(this, DisplayIdActivity.class);
         startActivity(intent);
+
+        //if (!prevAndrewId.equals(andrewId)) {
+            Intent mailClient = new Intent(Intent.ACTION_VIEW);
+
+            // TODO: check that user actually has has gmail installed
+            mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivity");
+            mailClient.setType("plain/text");
+            mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+            mailClient.putExtra(Intent.EXTRA_EMAIL, new String[] { "print@scottylabs.org" });
+            mailClient.putExtra(Intent.EXTRA_SUBJECT, "HELP");
+            mailClient.putExtra(Intent.EXTRA_TEXT, "LINK " + andrewId + "@andrew.cmu.edu");
+            System.out.println("REACHED");
+            startActivity(mailClient);
+        // }
     }
 }

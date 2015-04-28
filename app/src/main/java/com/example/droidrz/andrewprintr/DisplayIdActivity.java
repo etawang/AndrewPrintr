@@ -1,26 +1,51 @@
 package com.example.droidrz.andrewprintr;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
-public class DisplayIdActivity extends ActionBarActivity {
+public class DisplayIdActivity extends ActionBarActivity implements View.OnClickListener {
     TextView idTextView;
+    Button changeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+
+        if (data != null) {
+            Intent mailClient = new Intent(Intent.ACTION_VIEW);
+
+            // TODO: check that user actually has has gmail installed
+            mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivity");
+            mailClient.setType("plain/text");
+            mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+            mailClient.putExtra(Intent.EXTRA_EMAIL, new String[]{"print@scottylabs.org"});
+            mailClient.putExtra(Intent.EXTRA_SUBJECT, "HELP");
+            mailClient.putExtra(Intent.EXTRA_STREAM, data.getPath());
+            startActivity(mailClient);
+        }
         setContentView(R.layout.activity_display_id);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         idTextView = (TextView) findViewById(R.id.displayid_textview);
         idTextView.setText("Your andrewId is " + prefs.getString("andrewId", ""));
+
+        changeButton = (Button) findViewById(R.id.changeid_button);
+        changeButton.setOnClickListener(this);
+
     }
 
 
@@ -44,5 +69,11 @@ public class DisplayIdActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, EnterIdActivity.class);
+        startActivity(intent);
     }
 }

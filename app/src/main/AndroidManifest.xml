@@ -19,6 +19,12 @@
         <activity
             android:name=".DisplayIdActivity"
             android:label="@string/title_activity_display_id" >
+            <intent-filter>
+                <action android:name="android.intent.action.OPEN_DOCUMENT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
         </activity>
     </application>
 

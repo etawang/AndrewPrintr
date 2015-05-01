@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.util.Log;
 
 public class DisplayIdActivity extends ActionBarActivity implements View.OnClickListener {
     TextView idTextView;
@@ -32,8 +32,8 @@ public class DisplayIdActivity extends ActionBarActivity implements View.OnClick
             mailClient.setType("plain/text");
             mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
             mailClient.putExtra(Intent.EXTRA_EMAIL, new String[]{"print@scottylabs.org"});
-            mailClient.putExtra(Intent.EXTRA_SUBJECT, "HELP");
-            mailClient.putExtra(Intent.EXTRA_STREAM, data.getPath());
+            mailClient.putExtra(Intent.EXTRA_SUBJECT, "PRINT");
+            mailClient.putExtra(Intent.EXTRA_STREAM, data);
             startActivity(mailClient);
         }
         setContentView(R.layout.activity_display_id);
